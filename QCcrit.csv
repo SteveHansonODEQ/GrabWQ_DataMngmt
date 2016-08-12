@@ -1,0 +1,38 @@
+charid,QCcalc,A,B,Source
+bod,RPD,0.1,0.2,DEQ04-LAB-0047-QAPP Version 2.0 Appendix A
+do,AbsDiff,0.3,1,DQM Version 5.0
+ec,LogDiff,0.6,0.8,DQM Version 5.0
+ent,LogDiff,0.6,0.8,DEQ04-LAB-0047-QAPP Version 2.0 Appendix A
+fc,LogDiff,0.6,0.8,DEQ04-LAB-0047-QAPP Version 2.0 Appendix A
+k,AbsDiff,0.2,0.4,
+k,RPD,0.2,0.4,
+nh3,AbsDiff,0.01,0.02,BOR LOQ's
+nh3,RPD,0.2,0.4,
+nit,AbsDiff,0.01,0.02,BOR LOQ's
+nit,RPD,0.1,0.2,DEQ04-LAB-0047-QAPP Version 2.0 Appendix A
+no2,RPD,0.1,0.2,DEQ04-LAB-0047-QAPP Version 2.0 Appendix A
+no3,AbsDiff,0.25,0.5,WOU NO3 analysis method
+no3,RPD,0.1,0.2,DEQ04-LAB-0047-QAPP Version 2.0 Appendix A
+op,AbsDiff,0.003,0.006,BOR LOQ's
+op,RPD,0.1,0.2,DEQ04-LAB-0047-QAPP Version 2.0 Appendix A
+ph,AbsDiff,0.3,0.5,DQM Version 5.0
+sc,RPD,0.1,0.15,DQM Version 5.0
+t,AbsDiff,0.5,2,DQM Version 5.0
+tb,AbsDiff,3,3.01,DQM Version 5.0
+tb,RPD,0.2,0.3,DQM Version 5.0
+tds,RPD,0.2,0.4,DEQ04-LAB-0047-QAPP Version 2.0 Appendix A
+tkn,AbsDiff,0.05,0.01,BOR LOQ's
+tkn,RPD,0.2,0.4,
+tp,AbsDiff,0.01,0.02,BOR LOQ's
+tp,RPD,0.1,0.2,DEQ04-LAB-0047-QAPP Version 2.0 Appendix A
+ts,RPD,0.2,0.4,DEQ04-LAB-0047-QAPP Version 2.0 Appendix A
+tss,AbsDiff,2,4,TSS SOP for DEQ lab version 2.4
+tss,RPD,0.2,0.4,DEQ04-LAB-0047-QAPP Version 2.0 Appendix A
+w,AbsDiff,0.3,1,DQM Version 5.0
+sl,RPD,0.07,0.14,Beach QAPP Verson 2.0 DEQ03-LAB-0042-QAPP.pdf
+q,RPD,0.1,0.3,Excellent q measure is +/- 5 %
+mv,RPD,0.1,0.3,none
+csa,RPD,0.1,0.3,none
+wl,AbsDiff,0.02,0.04,none
+se,RPD,0.1,0.2,"above 2 meters, see \\deqlab1\wqm\Volunteer Monitoring\Protocols\SecchiQC.xlsx"
+se,AbsDiff,0.15,0.3,in meters low level 2 meters see \\deqlab1\wqm\Volunteer Monitoring\Protocols\SecchiQC.xlsx
