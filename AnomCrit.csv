@@ -1,0 +1,24 @@
+charid,RealRngL,RealRngU,amb01L,amb05L,amb95U,amb99U,stdL,stdU,stdLlp,stdUlp,AmbDataRange,StdRef
+bod,,,0.1,0.3,3.1,6.9,,,,1.2,1980-2015,
+do,,,5.2,7.4,13,14.2,8,,5.5,,1980-2015,\\deqlab1\wqm\Volunteer Monitoring\Protocols\SampleRequirementsFor303d.doc
+ec,,,0,1,345,1052,,406,,126,1980-2015,\\deqlab1\wqm\Volunteer Monitoring\Protocols\SampleRequirementsFor303d.doc
+ent,,,,,,,,130,,35,,
+fc,,,0,0,930,2400,,,,,1980-2015,
+k,,,0.2,0.36,7.9,12.6,,,,,2013-2015,
+nh3,,10,0,0.005,0.15,0.7,,4.4,,7.3,1980-2015,http://www.gpo.gov/fdsys/pkg/FR-2013-08-22/pdf/2013-20307.pdf
+nit,,15,0,0.005,1.82,3.669,,,,,2013-2015,
+no2,,5,,,,,,,,,,
+no3,,15,,,,,,,,,,
+op,,7,0,0.005,0.14,0.278,,,,,2013-2015,
+ph,5.6,9.5,6.7,7,8.6,9.2,6.5,8.5,,,1980-2015,\\deqlab1\wqm\Volunteer Monitoring\Protocols\SampleRequirementsFor303d.doc
+sc,1,,40,48,567,1070,,,,,2013-2015,
+t,,40,,,,,,16,,20,,Rearing and migration http://arcweb.sos.state.or.us/pages/rules/oars_300/oar_340/340_041.html
+tb,,,1,1,33,71.3,,,,,2013-2015,
+tds,,,,,,,,,,,,
+tkn,,,0,0.2,0.925,1.33,,,,,2013-2015,
+tp,,,0,0.01,0.31,0.53,,0.07,,,1980-2015,OWQI
+ts,,,34,43,443.6,850,,,,,1980-2015,
+tss,,,0,1,39,94.4,,,,,2013-2015,
+w,,30,5.2,7.4,13,14.2,8,,5.5,,1980-2015,\\deqlab1\wqm\Volunteer Monitoring\Protocols\SampleRequirementsFor303d.doc
+sl,,38,,,,,,,,,2013-2015,
+dos,,,57,78,117,140,90,,,,1980-2015,\\deqlab1\wqm\Volunteer Monitoring\Protocols\SampleRequirementsFor303d.doc
