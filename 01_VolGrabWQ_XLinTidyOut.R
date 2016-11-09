@@ -94,8 +94,8 @@ library(psych)
 ######################################################
 
 # Data submission details
-subid <- "0025" # NEEDS to be hand enetered here or added to the Excel file...shouldn't need to be a field in excel file uploaded to R
-actorg <- "MWSC" # Sampling orgnanization abreviation from volunteer database organization table
+subid <- "0026" # NEEDS to be hand enetered here or added to the Excel file...shouldn't need to be a field in excel file uploaded to R
+actorg <- "PBWC" # Sampling orgnanization abreviation from volunteer database organization table
 
 #  INPUT  Remove the "#" from the line in front of the duplicate batch type the data represents
 dbatch <- "Day"  # Duplicates batches are once a day without additional groupings
@@ -104,18 +104,18 @@ dbatch <- "Day"  # Duplicates batches are once a day without additional grouping
 
 ########################
 # Excel Workbook details
-dir <- "//deqlead02/Vol_Data/Malheur/2014_16"  #INPUT the directory you want to retrieve and write files to, change the text in the quotes
-file <- "MWC4r.xls" # INPUT within the quotes the complete path of file
+dir <- "//deqlead02/Vol_Data/Powder/2015"  #INPUT the directory you want to retrieve and write files to, change the text in the quotes
+file <- "pbwc20154r.xlsx" # INPUT within the quotes the complete path of file
 
 # Data worksheet details
 sheet1 <- "data"  # INPUT for the name of the worksheet
 sr1 <- 1 # INPUT the row number for the start of the date, usually the header row
-nr1 <- 427  # INPUT the number of rows in your csv file
+nr1 <- 516  # INPUT the number of rows in your csv file
 
 # Project information worksheet details
-sheet2 <- "Project_Info" 
+sheet2 <- "ProjectInfo" 
 sr2 <- 6
-nr2 <- 10
+nr2 <- 11
 
 
 #####################################################
@@ -133,8 +133,8 @@ nr2 <- 10
 ##  Load the data to create data frame "gd"
 # setwd(dir) - directory is set in each load or save call
 gdwb <- loadWorkbook(paste0(dir,'/',file))  #  loads workbook identified in "file" above
-gd <- readWorksheet(gdwb, sheet = sheet1, startRow= sr1, endRow= nr1) # Generates the dataframe with result data
 prj <- readWorksheet(gdwb, sheet = sheet2, startRow= sr2, endRow= nr2) 
+gd <- readWorksheet(gdwb, sheet = sheet1, startRow= sr1, endRow= nr1) # Generates the dataframe with result data
 str (gd)
 
 
@@ -292,24 +292,34 @@ redundantresults<-gd[which(duplicated(gd[,c(grep("_r",names(gd)),grep("actroot",
 write.csv(redundantresults, file = paste0(dir,'/',subid,"RedundantResults.csv")) # create csv of data matching results at same station Datetime combo
 
 
-#########################################################
+########################################################
 # Generate vector of duplicate DateTime/Station combos #
 # Add "b" to redundant activity root fields            #
-########################################################
+# then adds "c" to additional redundancy...see note    #
+############### ########################################
 
 redundantActRt <- gd[which(duplicated(gd$actroot)),]
 
 # Add a "b" to the end of the actroots in gd dataframe
-for (i in which(duplicated(gd$actroot))){
-  gd$actroot[i]<- sub(gd$actroot[i],paste0(gd$actroot[i],"b"),gd$actroot[i])
-}
+#for (i in which(duplicated(gd$actroot))){
+#  gd$actroot[i]<- sub(gd$actroot[i],paste0(gd$actroot[i],"b"),gd$actroot[i])
+#}
+gd$actroot[which(duplicated(gd$actroot))] <- paste0(gd$actroot[which(duplicated(gd$actroot))],"b") # first duplicates
+substr(gd$actroot[which(duplicated(gd$actroot))],
+       nchar(gd$actroot[which(duplicated(gd$actroot))]),
+       nchar(gd$actroot[which(duplicated(gd$actroot))]))<-"c" # second duplicates
 
 # Add "b" to the end of the actroots in redundantActRt dataframe/csv file
 for (i in seq_along(redundantActRt$actroot)){
   redundantActRt$actroot[i]<- sub(redundantActRt$actroot[i],paste0(redundantActRt$actroot[i],"b"),redundantActRt$actroot[i])
 }
+substr(redundantActRt$actroot[which(duplicated(redundantActRt$actroot))],
+       nchar(redundantActRt$actroot[which(duplicated(redundantActRt$actroot))]),
+       nchar(redundantActRt$actroot[which(duplicated(redundantActRt$actroot))]))<-"c" 
 
 write.csv(redundantActRt, file = paste0(dir,'/',subid,"RedundantActRt.csv")) # create csv of duplicated datetime/station combos
+
+# # # # This needs to be more robust using max Freq of table(gd$actroot) to run substr on duplicated adding letters[1:maxduplicated]
 
 
 ############################################################################
