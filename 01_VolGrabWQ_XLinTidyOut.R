@@ -26,7 +26,7 @@
        load("CharNames.RData") # Hope to not need path like //deqlab1/WQM/Volunteer Monitoring/datamanagement/R/VolGrabWQ/
        View(CharNames)  
        # The QC criteria for each characteristic also needs to be included in the QCcrit.csv file.
-       QCcrit <- read.csv("QCcrit.csv",header=TRUE)  # criteria for grading
+       QCcrit <- read.csv("QCcrit.csv",header=TRUE, stringsAsFactors = FALSE)  # criteria for grading
          # duplicate data make sure it is in your folder, hope to not need //deqlab1/WQM/Volunteer Monitoring/datamanagement/R/VolGrabWQ/
        View(QCcrit)
        
@@ -94,28 +94,31 @@ library(psych)
 ######################################################
 
 # Data submission details
-subid <- "0026" # NEEDS to be hand enetered here or added to the Excel file...shouldn't need to be a field in excel file uploaded to R
-actorg <- "PBWC" # Sampling orgnanization abreviation from volunteer database organization table
+subid <- "0096" # NEEDS to be hand enetered here or added to the Excel file...shouldn't need to be a field in excel file uploaded to R
+actorg <- "TLBP" # Sampling orgnanization abreviation from volunteer database organization table
 
 #  INPUT  Remove the "#" from the line in front of the duplicate batch type the data represents
-dbatch <- "Day"  # Duplicates batches are once a day without additional groupings
+ dbatch <- "Day"  # Duplicates batches are once a day without additional groupings
 # dbatch <- "Day+Crew"  # Duplicates are done once a day by a sampling crew- multiple crews on one day
 # dbatch <- "Sampler" # Duplicates done by a sampler at regular frequency, but not daily
 
 ########################
 # Excel Workbook details
-dir <- "//deqlead02/Vol_Data/Powder/2015"  #INPUT the directory you want to retrieve and write files to, change the text in the quotes
-file <- "pbwc20154r.xlsx" # INPUT within the quotes the complete path of file
+dir <- "//deqlab1/Vol_Data/TenmileLake/2012_15wrkCpy/Trib"  #INPUT the directory you want to retrieve and write files to, change the text in the quotes
+file <- "4r_TLBP12to15Trib.xlsx" # INPUT within the quotes the complete path of file
+
+
+
 
 # Data worksheet details
 sheet1 <- "data"  # INPUT for the name of the worksheet
 sr1 <- 1 # INPUT the row number for the start of the date, usually the header row
-nr1 <- 516  # INPUT the number of rows in your csv file
+nr1 <- 143  # INPUT the number of rows in your csv file
 
 # Project information worksheet details
 sheet2 <- "ProjectInfo" 
 sr2 <- 6
-nr2 <- 11
+nr2 <- 12
 
 
 #####################################################
@@ -370,7 +373,7 @@ for(i in seq_along(gdl$r)){
 ##################################################
 
 ## Duplicate QC calculation (gdl$QCcalc) methods
-charAD <- c("t", "ph", "w", "do")  # character ID's using absolute difference as QC calculation method
+charAD <- c("t", "ph", "w", "do", "dos")  # character ID's using absolute difference as QC calculation method
 charLD <- c("ec", "ent", "fc") # character ID's using log difference as QC calculation method
 #QCcrit <- read.csv("QCcrit.csv",header=TRUE)  # criteria for grading duplicate data make sure it is in your folder
 names(QCcrit) <- c("charid","QCcalc", "A","B","Source")
@@ -410,6 +413,17 @@ for (i in seq_along(gdl$r)) {
 # convert precision values to numeric values
 gdl$prec_val <- as.numeric(gdl$prec_val) # warning about coercion seems to be OK...can do a count before and after to see # of NA's
 
+# Change QC criteria when the abslolute difference criteria is less than the limit of quantitation
+for (i in which(QCcrit$charid %in% prj$CharID & QCcrit$QCcalc %in% 'AbsDiff')) {
+  if (!is.na(prj$LOQ[which(prj$CharID %in% QCcrit$charid[i])]) & (QCcrit$A[i] < prj$LOQ[which(prj$CharID %in% QCcrit$charid[i])])){
+    QCcrit$A[i] <- as.numeric(prj$LOQ[which(prj$CharID %in% QCcrit$charid[i])])
+    QCcrit$B[i] <- 2 * prj$LOQ[which(prj$CharID %in% QCcrit$charid[i])]
+    QCcrit$Source[i] <- 'Precision criteria based on submissions LOQ, A <= LOQ, B <= 2LOQ'
+  }
+}
+
+
+
 # Determine DQL based on comparison of precision value to QC criteria
 for (i in seq_along(gdl$r)) {
   gdl$DEQ_prec[i] <- if(gdl$QCcalc[i] == "NA"){
@@ -435,6 +449,7 @@ s_fp <- gdl[,c("actroot","LASAR","SiteIDcontext","DateTime","DupBatchKey","item"
 gdtidy <- rbind(s_fp,fd)
 
 save(charlst, file = paste0(dir,'/',subid,'-charlst.RData'))
+save(QCcrit, file = paste0(dir,'/',subid,'-QCcrit.RData'))
 save(charAD, file = paste0(dir,'/',subid,'-CharAD.RData'))
 save(charLD, file = paste0(dir,'/',subid,'-CharLD.RData'))
 save(gdtidy, file = paste0(dir,'/',subid,'-gdtidy.RData'))
