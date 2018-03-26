@@ -7,19 +7,20 @@ library(dplyr)
 library(reshape2)
 library(psych)
 library(RODBC)
+library(lubridate)
 
 # Data submission details
-subid <- "0025" # NEEDS to be hand enetered here or added to the Excel file...shouldn't need to be a field in excel file uploaded to R
-actorg <- "MWSC" # Sampling orgnanization abreviation from volunteer database organization table
+subid <- "0096" # NEEDS to be hand enetered here or added to the Excel file...shouldn't need to be a field in excel file uploaded to R
+actorg <- "TLBP" # Sampling orgnanization abreviation from volunteer database organization table
 
 #  INPUT  Remove the "#" from the line in front of the duplicate batch type the data represents
-dbatch <- "Day"  # Duplicates batches are once a day without additional groupings
+ dbatch <- "Day"  # Duplicates batches are once a day without additional groupings
 # dbatch <- "Day+Crew"  # Duplicates are done once a day by a sampling crew- multiple crews on one day
 # dbatch <- "Sampler" # Duplicates done by a sampler at regular frequency, but not daily
 
 ########################
 # Tidy water quality dataset details
-dir <- "//deqlead02/Vol_Data/Malheur/2014_16/"  #INPUT the directory you want to retrieve and write files to, change the text in the quotes
+dir <- "//deqlab1/Vol_Data/TenmileLake/2012_15wrkCpy/Trib"  #INPUT the directory you want to retrieve and write files to, change the text in the quotes
 
 
 
@@ -39,16 +40,15 @@ dir <- "//deqlead02/Vol_Data/Malheur/2014_16/"  #INPUT the directory you want to
 # Load the data
 load(paste0(dir,'/',subid,'-gdtidy.Rdata'))
 # Load the project information
-load(paste0(dir, subid,'-Project.RData'))
+load(paste0(dir, '/',subid,'-Project.RData'))
 # Load summary data
-DatSum <- read.csv(paste0(dir, subid,'_DataSummary.csv'),header=TRUE)
-
+DatSum <- read.csv(paste0(dir,'/', subid,'_DataSummary.csv'),header=TRUE)
 
 
 
 ##### Generate Activity ID
 
-act<-gdtidy[,c("LASAR","SiteIDcontext","DateTime","DupBatchKey","cmnt", "charid","ActType", "item", "actroot")] 
+act<-gdtidy[,c("LASAR","SiteIDcontext","DateTime", "DupBatchKey","cmnt", "charid","ActType", "item", "actroot")] 
 # get the columns I need...actualy don't need the actID column
 str(act)
 
@@ -93,6 +93,7 @@ for (i in seq_along(act$LASAR)){
 for (i in seq_along(act$LASAR)){
   act$rsltid[i] <- paste0(act$id[i],"-",act$charid[i])
 }
+
 
 
 ######################################################
@@ -170,6 +171,7 @@ actinfo$subid <- subid # add submission ID number for activity table
 
 str(actinfo)
 
+
 #########################################################################################
 # Use the activity root to move the organization and DEQ comments into activity info df #
 # Use ifelse statements to pull in other fields which may be poplulated in Excel file   #
@@ -191,20 +193,41 @@ for (i in seq_along(actinfo$id)){ # the ifelse statements are unnecessary now an
   actinfo$smplDpth[i] <- ifelse("smplDpth" %in% names(gd), gd$smplDpth[which(gd$actroot == actinfo$actroot[i])], NA)
   actinfo$smplDpthUnit[i] <- ifelse("smplDpthUnit" %in% names(gd), gd$smplDpthUnit[which(gd$actroot == actinfo$actroot[i])], NA)
   actinfo$samplers[i] <- ifelse("samplers" %in% names(gd), gd$samplers[which(gd$actroot == actinfo$actroot[i])], NA) # in template
+  actinfo$startTimeZone [i] <- ifelse("startTimeZone" %in% names(gd), gd$startTimeZone[which(gd$actroot == actinfo$startTimeZone[i])], NA) # empty start time zone
+  actinfo$endTimeZone [i] <- ifelse("endTimeZone" %in% names(gd), gd$endTimeZone[which(gd$actroot == actinfo$endTimeZone[i])], NA)
 }
 
+
+###########################
+# Generate Timezone field #
+###########################
+
+   #  ##  ##
+  ## #   #
+ ###  #   #  UMES STATION IS IN 'America/Los_Angeles' TIME ZONE !!
+#  #   #   #
+#  # ##  ##
+
+
+actinfo$startTimeZone <- as.character(ifelse(dst(actinfo$DateTime) == T,"PDT", "PST"))
+
 actinfo$endDateTime<- as.POSIXct(actinfo$endDateTime, origin = "1970-01-01")
+actinfo$endTimeZone <- as.character(ifelse(dst(actinfo$endDateTime) == T,"PDT", "PST"))
+
 
 actinfo$actorg <- actorg
 
-t.Activity <- actinfo[,c("id","acttype", "subid", "LASAR","siteIDcontext", "site.desc", "DateTime", "endDateTime", "media", "actorg", "smplColMthd", 
-                         "smplColEquip", "smplColEquipName", "smplColEquipCommt", "smplDpth", "smplDpthUnit", "OrgComnt","DEQcomnt", "samplers")]
+t.Activity <- actinfo[,c("id","acttype", "subid", "LASAR","siteIDcontext", "site.desc", "DateTime", "startTimeZone", "endDateTime", "endTimeZone", 
+                         "media", "actorg", "smplColMthd", "smplColEquip", "smplColEquipName", "smplColEquipCommt", "smplDpth", "smplDpthUnit", 
+                         "OrgComnt","DEQcomnt", "samplers")]
 
-names(t.Activity) <- c("ActivityID","ActivityType", "SubID", "SiteID", "SiteID_Context", "SiteDescription", "StartDateTime", "EndDateTime",
-                       "Media", "ActivityOrg", "SmplColMthd", "SmplColEquip", "SmplEquipID", "SmplColEquipComment", "SmplDepth", "SmplDepthUnit", "Org_Comment",
-                       "DEQ_Comment","Samplers")
+names(t.Activity) <- c("ActivityID","ActivityType", "SubID", "SiteID", "SiteID_Context", "SiteDescription", "StartDateTime", "StartDateTimeZone",
+                       "EndDateTime", "EndDateTimeZone", "Media", "ActivityOrg", "SmplColMthd", "SmplColEquip", "SmplEquipID", "SmplColEquipComment", 
+                       "SmplDepth", "SmplDepthUnit", "Org_Comment", "DEQ_Comment","Samplers")
 
 write.csv(t.Activity, file = paste0(dir,'/',subid, '-t.Activity.csv'))
+
+
 
 
      ##################################################
@@ -357,7 +380,7 @@ for (i in unique(prj$CharID)) {  # i is a character id abbeviation
 
 names(t.Anomaly) <- c("ResultID", "AnomalyType")
 
-write.csv(t.Anomaly, file = "t.Anomaly.csv")
+write.csv(t.Anomaly, file = paste0(dir,'/',subid, '-t.anomaly.csv'))
 
 
 
@@ -371,7 +394,8 @@ write.csv(t.Anomaly, file = "t.Anomaly.csv")
 # 
 # 
 
-ch <- odbcConnect("VolWQdb", case="nochange")
+
+ch <- odbcConnectAccess("//deqlab1/wqm/Volunteer Monitoring/datamanagement/VolWQdb.mdb", case="nochange")
 odbcGetInfo(ch)
 sqlTypeInfo(ch)
 
@@ -415,7 +439,7 @@ sqlDrop(ch, "TempResult")
 ##                                        ##
 ############################################
 
-sqlSave(ch, t.Anomaly, tablename = 'TempAnom', append = FALSE, rownames = FALSE, colnames = FALSE, safer = TRUE, verbose = TRUE)
+sqlSave(ch, t.Anomaly, tablename = 'TempAnom', append = FALSE, rownames = FALSE, colnames = FALSE, safer = TRUE, verbose = FALSE)
 
 qryAnom <- 'INSERT INTO t_Anomaly ( ResultID, AnomalyType )
 SELECT TempAnom.ResultID, TempAnom.AnomalyType
@@ -471,13 +495,13 @@ if (dbatch == "Day") {
   t.ActGrp$ActGrpID<- paste0(t.ActGrp$bhdate,"-",t.ActGrp$DupBatchKey)
   t.ActGrp <- ddply(t.ActGrp,~ActGrpID,summarise,dat=first(bhdate),dbk=first(DupBatchKey))
   t.ActGrp$ActGrpType <- "QC Sample"
-  t.ActGrp <- t.ActGrp[,c("ActGrpID","ActGrpType","dbk")]
-  names(t.ActGrp) <- c("ActGrpID", "ActGrpType", "ActGrpComment")
+  t.ActGrp <- t.ActGrp[,c("ActGrpID", "dat", "ActGrpType","dbk")]
+  names(t.ActGrp) <- c("ActGrpID", "dat", "ActGrpType", "ActGrpComment")
   
   for(i in 1:nrow(t.ActGrp)){
     #print(t.ActGrp$dbk[i])
     # subset actinfo "id" field by rows which match subid-YYYYMMDD and DupBatchKey fields.
-    tmp <- actinfo[which((substr(actinfo$id,0,13)==t.ActGrp$dat[i]) & (actinfo$DupBatchKey == t.ActGrp$dbk[i])),c("id","DupBatchKey")]
+    tmp <- actinfo[which((substr(actinfo$id,0,13)==t.ActGrp$dat[i]) & (actinfo$DupBatchKey == t.ActGrp$ActGrpComment[i])),c("id","DupBatchKey")]
     tmp$ActGrpID <- t.ActGrp$ActGrpID[i]
     if (nrow(tmp) > 0) {
       ifelse(i == 1, bh.col <- tmp, bh.col <- rbind(bh.col, tmp))
