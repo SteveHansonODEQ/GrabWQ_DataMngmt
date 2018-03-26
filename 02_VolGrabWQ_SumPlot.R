@@ -29,13 +29,13 @@ library(psych)
 ######################################################
 
 # Data submission details
-subid <- "0096" # NEEDS to be hand enetered here or added to the Excel file...shouldn't need to be a field in excel file uploaded to R
-actorg <- "TLBP" # Sampling orgnanization abreviation from volunteer database organization table
+subid <- "0036" # NEEDS to be hand enetered here or added to the Excel file...shouldn't need to be a field in excel file uploaded to R
+actorg <- "MSWCD" # Sampling orgnanization abreviation from volunteer database organization table
 
 
 ########################
 # Tidy water quality dataset details
-dir <- "//deqlab1/Vol_Data/TenmileLake/2012_15wrkCpy/Trib"  #INPUT the directory you want to retrieve and write files to, change the text in the quotes
+dir <- "//deqlab1/Vol_Data/Pudding/2009_2010/deq10submit"  #INPUT the directory you want to retrieve and write files to, change the text in the quotes
 #dat <- paste0(dir,'/',subid,'-gdtidy.Rdata')
 
 ############################################################################
