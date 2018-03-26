@@ -29,13 +29,13 @@ library(psych)
 ######################################################
 
 # Data submission details
-subid <- "0025" # NEEDS to be hand enetered here or added to the Excel file...shouldn't need to be a field in excel file uploaded to R
-actorg <- "MWSC" # Sampling orgnanization abreviation from volunteer database organization table
+subid <- "0096" # NEEDS to be hand enetered here or added to the Excel file...shouldn't need to be a field in excel file uploaded to R
+actorg <- "TLBP" # Sampling orgnanization abreviation from volunteer database organization table
 
 
 ########################
 # Tidy water quality dataset details
-dir <- "//deqlead02/Vol_Data/Malheur/2014_16"  #INPUT the directory you want to retrieve and write files to, change the text in the quotes
+dir <- "//deqlab1/Vol_Data/TenmileLake/2012_15wrkCpy/Trib"  #INPUT the directory you want to retrieve and write files to, change the text in the quotes
 #dat <- paste0(dir,'/',subid,'-gdtidy.Rdata')
 
 ############################################################################
@@ -173,7 +173,7 @@ load(paste0(dir,'/',subid,'-CharLD.RData'))
 ###
 ##
 # Add parameters to CharAD so it doesn't plot on log scale.
-charAD<- append(c("sl","mv","csa","dos"),charAD)
+charAD<- append(c("sl","mv","csa","dos","bod5"),charAD)
 #
 ##
 ###
