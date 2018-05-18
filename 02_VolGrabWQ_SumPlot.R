@@ -29,13 +29,16 @@ library(psych)
 ######################################################
 
 # Data submission details
+
 subid <- "0036" # NEEDS to be hand enetered here or added to the Excel file...shouldn't need to be a field in excel file uploaded to R
 actorg <- "MSWCD" # Sampling orgnanization abreviation from volunteer database organization table
 
 
 ########################
 # Tidy water quality dataset details
+
 dir <- "//deqlab1/Vol_Data/Pudding/2009_2010/deq10submit"  #INPUT the directory you want to retrieve and write files to, change the text in the quotes
+
 #dat <- paste0(dir,'/',subid,'-gdtidy.Rdata')
 
 ############################################################################
@@ -173,6 +176,7 @@ load(paste0(dir,'/',subid,'-CharLD.RData'))
 ###
 ##
 # Add parameters to CharAD so it doesn't plot on log scale.
+
 charAD<- append(c("sl","mv","csa","dos","bod5"),charAD)
 #
 ##

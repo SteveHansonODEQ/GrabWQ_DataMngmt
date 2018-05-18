@@ -26,8 +26,9 @@
        load("CharNames.RData") # Hope to not need path like //deqlab1/WQM/Volunteer Monitoring/datamanagement/R/VolGrabWQ/
        View(CharNames)  
        # The QC criteria for each characteristic also needs to be included in the QCcrit.csv file.
+
        QCcrit <- read.csv("QCcrit.csv",header=TRUE, stringsAsFactors = FALSE)  # criteria for grading
-         # duplicate data make sure it is in your folder, hope to not need //deqlab1/WQM/Volunteer Monitoring/datamanagement/R/VolGrabWQ/
+       # duplicate data make sure it is in your folder, hope to not need //deqlab1/WQM/Volunteer Monitoring/datamanagement/R/VolGrabWQ/
        View(QCcrit)
        
       # SUFFIXES for each of the result fields.  Note each characteristic must have a field with the characteristic id prefix
@@ -94,11 +95,13 @@ library(psych)
 ######################################################
 
 # Data submission details
+
 subid <- "0036" # NEEDS to be hand enetered here or added to the Excel file...shouldn't need to be a field in excel file uploaded to R
 actorg <- "MSWCD" # Sampling orgnanization abreviation from volunteer database organization table
 
 #  INPUT  Remove the "#" from the line in front of the duplicate batch type the data represents
  dbatch <- "Day"  # Duplicates batches are once a day without additional groupings
+
 # dbatch <- "Day+Crew"  # Duplicates are done once a day by a sampling crew- multiple crews on one day
 # dbatch <- "Sampler" # Duplicates done by a sampler at regular frequency, but not daily
 
@@ -110,15 +113,19 @@ file <- "ForR_2009-10PuddingGrab.xls" # INPUT within the quotes the complete pat
 
 
 
+
 # Data worksheet details
 sheet1 <- "data"  # INPUT for the name of the worksheet
 sr1 <- 1 # INPUT the row number for the start of the date, usually the header row
+
 nr1 <- 71  # INPUT the number of rows in your csv file
 
 # Project information worksheet details
 sheet2 <- "Project_Info" 
 sr2 <- 6
+
 nr2 <- 16
+
 
 
 #####################################################
@@ -136,8 +143,10 @@ nr2 <- 16
 ##  Load the data to create data frame "gd"
 # setwd(dir) - directory is set in each load or save call
 gdwb <- loadWorkbook(paste0(dir,'/',file))  #  loads workbook identified in "file" above
+
 prj <- readWorksheet(gdwb, sheet = sheet2, startRow= sr2, endRow= nr2) 
 gd <- readWorksheet(gdwb, sheet = sheet1, startRow= sr1, endRow= nr1) # Generates the dataframe with result data
+
 str (gd)
 
 
@@ -295,15 +304,18 @@ redundantresults<-gd[which(duplicated(gd[,c(grep("_r",names(gd)),grep("actroot",
 write.csv(redundantresults, file = paste0(dir,'/',subid,"RedundantResults.csv")) # create csv of data matching results at same station Datetime combo
 
 
+
 ########################################################
 # Generate vector of duplicate DateTime/Station combos #
 # Add "b" to redundant activity root fields            #
 # then adds "c" to additional redundancy...see note    #
 ############### ########################################
 
+
 redundantActRt <- gd[which(duplicated(gd$actroot)),]
 
 # Add a "b" to the end of the actroots in gd dataframe
+
 #for (i in which(duplicated(gd$actroot))){
 #  gd$actroot[i]<- sub(gd$actroot[i],paste0(gd$actroot[i],"b"),gd$actroot[i])
 #}
@@ -311,6 +323,7 @@ gd$actroot[which(duplicated(gd$actroot))] <- paste0(gd$actroot[which(duplicated(
 substr(gd$actroot[which(duplicated(gd$actroot))],
        nchar(gd$actroot[which(duplicated(gd$actroot))]),
        nchar(gd$actroot[which(duplicated(gd$actroot))]))<-"c" # second duplicates
+
 
 # Add "b" to the end of the actroots in redundantActRt dataframe/csv file
 for (i in seq_along(redundantActRt$actroot)){
@@ -323,6 +336,7 @@ substr(redundantActRt$actroot[which(duplicated(redundantActRt$actroot))],
 write.csv(redundantActRt, file = paste0(dir,'/',subid,"RedundantActRt.csv")) # create csv of duplicated datetime/station combos
 
 # # # # This needs to be more robust using max Freq of table(gd$actroot) to run substr on duplicated adding letters[1:maxduplicated]
+
 
 
 ############################################################################
@@ -373,7 +387,9 @@ for(i in seq_along(gdl$r)){
 ##################################################
 
 ## Duplicate QC calculation (gdl$QCcalc) methods
+
 charAD <- c("t", "ph", "w", "do", "dos")  # character ID's using absolute difference as QC calculation method
+
 charLD <- c("ec", "ent", "fc") # character ID's using log difference as QC calculation method
 #QCcrit <- read.csv("QCcrit.csv",header=TRUE)  # criteria for grading duplicate data make sure it is in your folder
 names(QCcrit) <- c("charid","QCcalc", "A","B","Source")
@@ -413,6 +429,7 @@ for (i in seq_along(gdl$r)) {
 # convert precision values to numeric values
 gdl$prec_val <- as.numeric(gdl$prec_val) # warning about coercion seems to be OK...can do a count before and after to see # of NA's
 
+
 # Change QC criteria when the abslolute difference criteria is less than the limit of quantitation
 for (i in which(QCcrit$charid %in% prj$CharID & QCcrit$QCcalc %in% 'AbsDiff')) {
   if (!is.na(prj$LOQ[which(prj$CharID %in% QCcrit$charid[i])]) & (QCcrit$A[i] < prj$LOQ[which(prj$CharID %in% QCcrit$charid[i])])){
@@ -421,6 +438,7 @@ for (i in which(QCcrit$charid %in% prj$CharID & QCcrit$QCcalc %in% 'AbsDiff')) {
     QCcrit$Source[i] <- 'Precision criteria based on submissions LOQ, A <= LOQ, B <= 2LOQ'
   }
 }
+
 
 
 
@@ -449,7 +467,9 @@ s_fp <- gdl[,c("actroot","LASAR","SiteIDcontext","DateTime","DupBatchKey","item"
 gdtidy <- rbind(s_fp,fd)
 
 save(charlst, file = paste0(dir,'/',subid,'-charlst.RData'))
+
 save(QCcrit, file = paste0(dir,'/',subid,'-QCcrit.RData'))
+
 save(charAD, file = paste0(dir,'/',subid,'-CharAD.RData'))
 save(charLD, file = paste0(dir,'/',subid,'-CharLD.RData'))
 save(gdtidy, file = paste0(dir,'/',subid,'-gdtidy.RData'))
