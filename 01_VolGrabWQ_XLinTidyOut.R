@@ -23,11 +23,12 @@
 # 4.  Each result field is designated by the prefix of the characteristic id (ca) and one or more suffixes.
       # CHARACTERISTIC ABBREVIATIONS (prefix): makes sure they match below shortened versions in the file CharNames.RData
       # Valid Values Charactersitic Abbreviations
-       load("CharNames.RData") # Hope to not need path like //deqlab1/WQM/Volunteer Monitoring/datamanagement/R/VolGrabWQ/
+       load("//deqlab1/WQM/Volunteer Monitoring/datamanagement/R/VolGrabWQ/CharNames.RData") 
+      # Hope to not need path like //deqlab1/WQM/Volunteer Monitoring/datamanagement/R/VolGrabWQ/
        View(CharNames)  
        # The QC criteria for each characteristic also needs to be included in the QCcrit.csv file.
 
-       QCcrit <- read.csv("QCcrit.csv",header=TRUE, stringsAsFactors = FALSE)  # criteria for grading
+       QCcrit <- read.csv("//deqlab1/WQM/Volunteer Monitoring/datamanagement/R/VolGrabWQ/QCcrit.csv",header=TRUE, stringsAsFactors = FALSE)  # criteria for grading
        # duplicate data make sure it is in your folder, hope to not need //deqlab1/WQM/Volunteer Monitoring/datamanagement/R/VolGrabWQ/
        View(QCcrit)
        
@@ -96,8 +97,8 @@ library(psych)
 
 # Data submission details
 
-subid <- "0036" # NEEDS to be hand enetered here or added to the Excel file...shouldn't need to be a field in excel file uploaded to R
-actorg <- "MSWCD" # Sampling orgnanization abreviation from volunteer database organization table
+subid <- "0232" # NEEDS to be hand enetered here or added to the Excel file...shouldn't need to be a field in excel file uploaded to R
+actorg <- "MalSWCD" # Sampling orgnanization abreviation from volunteer database organization table
 
 #  INPUT  Remove the "#" from the line in front of the duplicate batch type the data represents
  dbatch <- "Day"  # Duplicates batches are once a day without additional groupings
@@ -105,10 +106,22 @@ actorg <- "MSWCD" # Sampling orgnanization abreviation from volunteer database o
 # dbatch <- "Day+Crew"  # Duplicates are done once a day by a sampling crew- multiple crews on one day
 # dbatch <- "Sampler" # Duplicates done by a sampler at regular frequency, but not daily
 
+ #A.Britson addition****
+ #code to change QCcrit values, modify as necessary
+ #need to change AbsDiff QC crit for sl
+ 
+  QCcrit$A[QCcrit$charid=='sl' & QCcrit$QCcalc=="AbsDiff"]<-.01
+  QCcrit$B[QCcrit$charid=='sl' & QCcrit$QCcalc=="AbsDiff"]<-.02
+ 
+ #View(QCcrit)
+ 
+ #(A.Britson)need to insert code to change QCcrit when units are different....perhaps need to add units to QCcrit file?
+ #A.Britson out****
+ 
 ########################
 # Excel Workbook details
-dir <- "//deqlab1/Vol_Data/Pudding/2009_2010/deq10submit"  #INPUT the directory you want to retrieve and write files to, change the text in the quotes
-file <- "ForR_2009-10PuddingGrab.xls" # INPUT within the quotes the complete path of file
+dir <- "//deqlab1/Vol_Data/Malheur/2016_18"  #INPUT the directory you want to retrieve and write files to, change the text in the quotes
+file <- "ForR_Malheur WC 2016-2018 .xlsx" # INPUT within the quotes the complete path of file
 
 
 
@@ -116,15 +129,15 @@ file <- "ForR_2009-10PuddingGrab.xls" # INPUT within the quotes the complete pat
 
 # Data worksheet details
 sheet1 <- "data"  # INPUT for the name of the worksheet
-sr1 <- 1 # INPUT the row number for the start of the date, usually the header row
+#sr1 <- 1 # INPUT the row number for the start of the date, usually the header row
 
-nr1 <- 71  # INPUT the number of rows in your csv file
+#nr1 <- 118  # INPUT the number of rows in your csv file
 
 # Project information worksheet details
 sheet2 <- "Project_Info" 
 sr2 <- 6
 
-nr2 <- 16
+nr2 <- 15
 
 
 
@@ -141,11 +154,11 @@ nr2 <- 16
 ######################################################
 
 ##  Load the data to create data frame "gd"
-# setwd(dir) - directory is set in each load or save call
+#setwd(dir) #- directory is set in each load or save call
 gdwb <- loadWorkbook(paste0(dir,'/',file))  #  loads workbook identified in "file" above
 
 prj <- readWorksheet(gdwb, sheet = sheet2, startRow= sr2, endRow= nr2) 
-gd <- readWorksheet(gdwb, sheet = sheet1, startRow= sr1, endRow= nr1) # Generates the dataframe with result data
+gd <- readWorksheet(gdwb, sheet = sheet1) # Generates the dataframe with result data
 
 str (gd)
 
@@ -392,7 +405,7 @@ charAD <- c("t", "ph", "w", "do", "dos")  # character ID's using absolute differ
 
 charLD <- c("ec", "ent", "fc") # character ID's using log difference as QC calculation method
 #QCcrit <- read.csv("QCcrit.csv",header=TRUE)  # criteria for grading duplicate data make sure it is in your folder
-names(QCcrit) <- c("charid","QCcalc", "A","B","Source")
+names(QCcrit) <- c("charid","QCcalc", "A","B","Source") # 4/22/19 cut out "Unit",
 # all other parameters use relative percent difference for duplicate QC calculations
 #unless the low level criteria (prj$LowLevQClimit) are met
 

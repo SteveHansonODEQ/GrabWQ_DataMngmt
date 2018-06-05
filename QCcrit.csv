@@ -1,43 +1,75 @@
-charid,QCcalc,A,B,Source
-bod,RPD,0.1,0.2,DEQ04-LAB-0047-QAPP Version 2.0 Appendix A
-do,AbsDiff,0.3,1,DQM Version 5.0
-ec,LogDiff,0.6,0.8,DQM Version 5.0
-ent,LogDiff,0.6,0.8,DEQ04-LAB-0047-QAPP Version 2.0 Appendix A
-fc,LogDiff,0.6,0.8,DEQ04-LAB-0047-QAPP Version 2.0 Appendix A
-k,AbsDiff,0.5,1,DEQ86-LAB-0002-QAG Version 8.0 p. 63
-k,RPD,0.2,0.4,DEQ default
-nh3,AbsDiff,0.01,0.02,DEQ12-LAB-0001-SOP Version 1.0
-nh3,RPD,0.2,0.4,DEQ12-LAB-0001-SOP Version 1.0
-nit,AbsDiff,0.005,0.01,"DEQ02-LAB-0010-SOP Version 6.0 (LQL, low level limit 10 x LQL)"
-nit,RPD,0.1,0.2,DEQ02-LAB-0010-SOP Version 6.0 (Lab duplicates)
-no2,AbsDiff,0.1,0.2,"DEQ02-LAB-0010-SOP Version 6.0 (LQL, low level limit 10 x LQL)"
-no2,RPD,0.1,0.2,DEQ02-LAB-0010-SOP Version 6.0 (Lab duplicates)
-no3,AbsDiff,0.1,0.2,"DEQ02-LAB-0010-SOP Version 6.0 (LQL, low level limit 10 x LQL)"
-no3,RPD,0.1,0.2,DEQ02-LAB-0010-SOP Version 6.0 (Lab duplicates)
-op,AbsDiff,0.005,0.01,DEQ03-LAB-0031-SOP Version 3.4
-op,RPD,0.3,0.4,DEQ03-LAB-0031-SOP Version 3.4
-ph,AbsDiff,0.3,0.5,DQM Version 5.0
-sc,RPD,0.1,0.15,DQM Version 5.0
-t,AbsDiff,0.5,2,DQM Version 5.0
-tb,AbsDiff,3,3.01,DQM Version 5.0
-tb,RPD,0.2,0.3,DQM Version 5.0
-tds,RPD,0.2,0.4,DEQ04-LAB-0047-QAPP Version 2.0 Appendix A
-tkn,AbsDiff,0.4,0.8,DEQ02-LAB-0009-SOP Version 4.1
-tkn,RPD,0.3,0.4,DEQ02-LAB-0009-SOP Version 4.1
-tp,AbsDiff,0.02,0.04,DEQ04-LAB-0023-SOP Version 2.2
-tp,RPD,0.3,0.4,DEQ04-LAB-0023-SOP Version 2.2
-ts,RPD,0.2,0.4,DEQ04-LAB-0047-QAPP Version 2.0 Appendix A
-tss,AbsDiff,2,4,TSS SOP for DEQ lab version 2.4
-tss,RPD,0.2,0.4,DEQ04-LAB-0047-QAPP Version 2.0 Appendix A
-w,AbsDiff,0.3,1,DQM Version 5.0
-sl,RPD,0.07,0.14,Beach QAPP Verson 2.0 DEQ03-LAB-0042-QAPP.pdf
-q,RPD,0.1,0.3,Excellent q measure is +/- 5 %
-mv,RPD,0.1,0.3,none
-csa,RPD,0.1,0.3,none
-wl,AbsDiff,0.02,0.04,none
-se,RPD,0.1,0.2,"above 2 meters, see \\deqlab1\wqm\Volunteer Monitoring\Protocols\SecchiQC.xlsx"
-se,AbsDiff,0.15,0.3,in meters low level 2 meters see \\deqlab1\wqm\Volunteer Monitoring\Protocols\SecchiQC.xlsx
-dos,AbsDiff,5,10,LDO SOP
-bod5,RPD,0.1,0.2,DEQ04-LAB-0047-QAPP
-bod5,AbsDiff,0.3,1,none
-bods,AbsDiff,0.3,1,DQM Version 5.0 DO criteria
+charid,QCcalc,A,B,Units,Source
+ascv,AbsDiff,0.2,0.4,,none based on West Virgina method used by Rogue WISE project
+bod,RPD,0.1,0.2,,DEQ04-LAB-0047-QAPP Version 2.0 Appendix A
+bod5,RPD,0.1,0.2,,DEQ04-LAB-0047-QAPP
+bod5,AbsDiff,0.3,1,,none
+bods,AbsDiff,0.3,1,,DQM Version 5.0 DO criteria
+csa,RPD,0.1,0.3,,none
+do,AbsDiff,0.3,1,,DQM Version 5.0
+dos,AbsDiff,5,10,,LDO SOP
+ec,LogDiff,0.6,0.8,,DQM Version 5.0
+ent,LogDiff,0.6,0.8,,DEQ04-LAB-0047-QAPP Version 2.0 Appendix A
+fc,LogDiff,0.6,0.8,,DEQ04-LAB-0047-QAPP Version 2.0 Appendix A
+k,AbsDiff,0.5,1,,DEQ86-LAB-0002-QAG Version 8.0 p. 63
+k,RPD,0.2,0.4,,DEQ default
+mv,RPD,0.1,0.3,,none
+nh3,AbsDiff,0.01,0.02,,DEQ12-LAB-0001-SOP Version 1.0
+nh3,RPD,0.2,0.4,,DEQ12-LAB-0001-SOP Version 1.0
+nit,AbsDiff,0.005,0.01,,"DEQ02-LAB-0010-SOP Version 6.0 (LQL, low level limit 10 x LQL)"
+nit,RPD,0.1,0.2,,DEQ02-LAB-0010-SOP Version 6.0 (Lab duplicates)
+no2,AbsDiff,0.1,0.2,,"DEQ02-LAB-0010-SOP Version 6.0 (LQL, low level limit 10 x LQL)"
+no2,RPD,0.1,0.2,,DEQ02-LAB-0010-SOP Version 6.0 (Lab duplicates)
+no3,AbsDiff,0.1,0.2,,"DEQ02-LAB-0010-SOP Version 6.0 (LQL, low level limit 10 x LQL)"
+no3,RPD,0.1,0.2,,DEQ02-LAB-0010-SOP Version 6.0 (Lab duplicates)
+op,AbsDiff,0.005,0.01,,DEQ03-LAB-0031-SOP Version 3.4
+op,RPD,0.3,0.4,,DEQ03-LAB-0031-SOP Version 3.4
+ph,AbsDiff,0.3,0.5,,DQM Version 5.0
+q,RPD,0.1,0.3,,Excellent q measure is +/- 5 %
+sc,RPD,0.1,0.15,,DQM Version 5.0
+se,RPD,0.1,0.2,,"above 2 meters, see \\deqlab1\wqm\Volunteer Monitoring\Protocols\SecchiQC.xlsx"
+se,AbsDiff,0.15,0.3,,in meters low level 2 meters see \\deqlab1\wqm\Volunteer Monitoring\Protocols\SecchiQC.xlsx
+si,RPD,0.2,0.4,,\\deqlab1\QA_Documents\QAPP\DEQ04-LAB-0042-QAPP.pdf
+si,AbsDiff,0.15,0.3,,\\deqlab1\QA_Documents\QAPP\DEQ04-LAB-0042-QAPP.pdf
+srp,AbsDiff,0.003,0.006,,SRWQL-I-20 Quality Assurance Quality Control QA_QC-R1.pdf (value is in mg/l)
+srp,RPD,0.2,0.4,,SRWQL-I-20 Quality Assurance Quality Control QA_QC-R1.pdf (value is in mg/l)
+t,AbsDiff,0.5,2,,DQM Version 5.0
+tb,AbsDiff,3,3.01,,DQM Version 5.0
+tb,RPD,0.2,0.3,,DQM Version 5.0
+tds,RPD,0.2,0.4,,DEQ04-LAB-0047-QAPP Version 2.0 Appendix A
+tkn,AbsDiff,0.4,0.8,,DEQ02-LAB-0009-SOP Version 4.1
+tkn,RPD,0.3,0.4,,DEQ02-LAB-0009-SOP Version 4.1
+tn,AbsDiff,0.05,0.1,,DEQ TN SOP Draft
+tn,RPD,0.2,0.4,,DEQ TN SOP Draft
+tp,AbsDiff,0.02,0.04,,DEQ04-LAB-0023-SOP Version 2.2
+tp,RPD,0.3,0.4,,DEQ04-LAB-0023-SOP Version 2.2
+ts,RPD,0.2,0.4,,DEQ04-LAB-0047-QAPP Version 2.0 Appendix A
+tss,AbsDiff,2,4,,TSS SOP for DEQ lab version 2.4
+tss,RPD,0.2,0.4,,DEQ04-LAB-0047-QAPP Version 2.0 Appendix A
+w,AbsDiff,0.3,1,,DQM Version 5.0
+wl,AbsDiff,0.02,0.04,,none
+ca,RPD,0.2,0.4,%,V:\RVCOG\GoldRayDam\QA Summary SOU WQ Monitoring GRD Removal 2010-2014.pdf
+ca,AbsDiff,1,2,mg/L,V:\RVCOG\GoldRayDam\QA Summary SOU WQ Monitoring GRD Removal 2010-2014.pdf
+mg,RPD,0.2,0.4,%,V:\RVCOG\GoldRayDam\QA Summary SOU WQ Monitoring GRD Removal 2010-2014.pdf
+mg,AbsDiff,1,2,mg/L,V:\RVCOG\GoldRayDam\QA Summary SOU WQ Monitoring GRD Removal 2010-2014.pdf
+na,RPD,0.2,0.4,%,V:\RVCOG\GoldRayDam\QA Summary SOU WQ Monitoring GRD Removal 2010-2014.pdf
+na,AbsDiff,1,2,mg/L,V:\RVCOG\GoldRayDam\QA Summary SOU WQ Monitoring GRD Removal 2010-2014.pdf
+fe,RPD,0.2,0.4,%,V:\RVCOG\GoldRayDam\QA Summary SOU WQ Monitoring GRD Removal 2010-2014.pdf
+fe,AbsDiff,0.015,0.03,mg/L,V:\RVCOG\GoldRayDam\QA Summary SOU WQ Monitoring GRD Removal 2010-2014.pdf
+mn,RPD,0.2,0.4,%,V:\RVCOG\GoldRayDam\QA Summary SOU WQ Monitoring GRD Removal 2010-2014.pdf
+mn,AbsDiff,0.02,0.04,mg/L,V:\RVCOG\GoldRayDam\QA Summary SOU WQ Monitoring GRD Removal 2010-2014.pdf
+cl,RPD,0.2,0.4,%,V:\RVCOG\GoldRayDam\QA Summary SOU WQ Monitoring GRD Removal 2010-2014.pdf
+cl,AbsDiff,1,2,mg/L,V:\RVCOG\GoldRayDam\QA Summary SOU WQ Monitoring GRD Removal 2010-2014.pdf
+so4,RPD,0.2,0.4,%,V:\RVCOG\GoldRayDam\QA Summary SOU WQ Monitoring GRD Removal 2010-2014.pdf
+so4,AbsDiff,0.5,1,mg/L,V:\RVCOG\GoldRayDam\QA Summary SOU WQ Monitoring GRD Removal 2010-2014.pdf
+alk,RPD,0.2,0.4,%,V:\RVCOG\GoldRayDam\QA Summary SOU WQ Monitoring GRD Removal 2010-2014.pdf
+alk,AbsDiff,12,24,mg/L,V:\RVCOG\GoldRayDam\QA Summary SOU WQ Monitoring GRD Removal 2010-2014.pdf
+chl,RPD,0.05,0.1,%,V:\TenmileLake\LSSUfiles\Chlorophyll.002.pdf -for spectrophotometric chlorophyl method
+chl,AbsDiff,0.5,0.1,ug/l,V:\TenmileLake\LSSUfiles\Tenmile LOQ Data.xlsx-for spectrophotometric chlorophyl method
+mic,RPD,0.2,0.4,%,V:\TenmileLake\LSSUfiles\Tenmile LOQ Data.xlsx-for HPLC cyanotoxin method
+mic,AbsDiff,0.2,0.4,ug/L,V:\TenmileLake\LSSUfiles\Tenmile LOQ Data.xlsx-for HPLC cyanotoxin method
+ana,RPD,0.2,0.4,%,V:\TenmileLake\LSSUfiles\Tenmile LOQ Data.xlsx-for HPLC cyanotoxin method
+ana,AbsDiff,0.2,0.4,ug/L,V:\TenmileLake\LSSUfiles\Tenmile LOQ Data.xlsx-for HPLC cyanotoxin method
+cyl,RPD,0.2,0.4,%,V:\TenmileLake\LSSUfiles\Tenmile LOQ Data.xlsx-for HPLC cyanotoxin method
+cyl,AbsDiff,0.2,0.4,ug/L,V:\TenmileLake\LSSUfiles\Tenmile LOQ Data.xlsx-for HPLC cyanotoxin method
+sl,AbsDiff,0.1,0.2,,Beach QAPP Verson 2.0 DEQ03-LAB-0042-QAPP.pdf
+sl,RPD,0.07,0.14,,Beach QAPP Verson 2.0 DEQ03-LAB-0042-QAPP.pdf

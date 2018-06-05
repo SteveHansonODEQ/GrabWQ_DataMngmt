@@ -30,14 +30,14 @@ library(psych)
 
 # Data submission details
 
-subid <- "0036" # NEEDS to be hand enetered here or added to the Excel file...shouldn't need to be a field in excel file uploaded to R
-actorg <- "MSWCD" # Sampling orgnanization abreviation from volunteer database organization table
+subid <- "0232" # NEEDS to be hand enetered here or added to the Excel file...shouldn't need to be a field in excel file uploaded to R
+actorg <- "MalSWCD" # Sampling orgnanization abreviation from volunteer database organization table
 
 
 ########################
 # Tidy water quality dataset details
 
-dir <- "//deqlab1/Vol_Data/Pudding/2009_2010/deq10submit"  #INPUT the directory you want to retrieve and write files to, change the text in the quotes
+dir <- "//deqlab1/Vol_Data/Malheur/2016_18" #INPUT the directory you want to retrieve and write files to, change the text in the quotes
 
 #dat <- paste0(dir,'/',subid,'-gdtidy.Rdata')
 
@@ -55,9 +55,15 @@ load(paste0(dir,'/',subid,'-gdtidy.Rdata'))
 load(paste0(dir,'/',subid,'-Project.Rdata'))
 load(paste0(dir,'/',subid,'-charlst.Rdata'))
 load(paste0(dir,'/',subid,'-gdl.Rdata'))
-QCcrit <- read.csv("QCcrit.csv",header=TRUE)  # criteria for grading duplicate data make sure it is in your folder
-names(QCcrit) <- c("charid","QCcalc", "A","B","Source")
 
+#A.Britson edit***
+#if QCcrit file was changed via VolGrabWQ_XLinTidyOut.R, then can't just upload it from GrabWQ_DataMngmt folder
+#must upload it from dir.
+
+load(paste0(dir,'/',subid,'-QCcrit.RData'))
+
+#QCcrit <- read.csv("QCcrit.csv",header=TRUE)  # criteria for grading duplicate data make sure it is in your folder
+#names(QCcrit) <- c("charid","QCcalc", "A","B","Source")
 
 
 # Summarize characteristics, combining all stations.
@@ -265,14 +271,14 @@ for (i in unique(qcsum$charid)){  # i is each charid-- "do", "ph", etc.
     Blx <- 10^(log10(mn)+B):mx
     Bly <- 10^(log10(Blx)-B)# X and Y for upper and lower log diff
   } else if (identical(QCc,"RPD")){ 
-    Aux <- mn:(mx-(mx*A)) # A line, upper, x range
-    Auy <- Aux+(Aux*A) # A line, upper, y range
-    Bux <- mn:(mx-(mx*B))
-    Buy <- Bux+(Bux*B)
-    Alx <- (mn+(mn*A)):mx
-    Aly <- Alx-(Alx*A)
-    Blx <- (mn+(mn*B)):mx
-    Bly <- Blx-(Blx*B)# X and Y for upper and lower RPD
+    Aux <- mn:(mx-(mx*A[["RPD"]])) # A line, upper, x range
+    Auy <- Aux+(Aux*A[["RPD"]]) # A line, upper, y range
+    Bux <- mn:(mx-(mx*B[["RPD"]]))
+    Buy <- Bux+(Bux*B[["RPD"]])
+    Alx <- (mn+(mn*A[["RPD"]])):mx
+    Aly <- Alx-(Alx*A[["RPD"]])
+    Blx <- (mn+(mn*B[["RPD"]])):mx
+    Bly <- Blx-(Blx*B[["RPD"]])# X and Y for upper and lower RPD
   } else { # in script below need to figure out which of A and B criteria to use, so subset required
     Aux <- mn:(mx-A["AbsDiff"]) # A line, upper, x range
     Auy <- Aux+A["AbsDiff"] # A line, upper, y range

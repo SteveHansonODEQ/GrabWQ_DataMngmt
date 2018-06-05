@@ -11,21 +11,17 @@ library(RODBC)
 library(lubridate)
 
 # Data submission details
-subid <- "0036" # NEEDS to be hand enetered here or added to the Excel file...shouldn't need to be a field in excel file uploaded to R
-actorg <- "MSWCD" # Sampling orgnanization abreviation from volunteer database organization table
+subid <- "0232" # NEEDS to be hand enetered here or added to the Excel file...shouldn't need to be a field in excel file uploaded to R
+actorg <- "MalSWCD" # Sampling orgnanization abreviation from volunteer database organization table
 
 #  INPUT  Remove the "#" from the line in front of the duplicate batch type the data represents
  dbatch <- "Day"  # Duplicates batches are once a day without additional groupings
-
 # dbatch <- "Day+Crew"  # Duplicates are done once a day by a sampling crew- multiple crews on one day
-# dbatch <- "Sampler" # Duplicates done by a sampler at regular frequency, but not daily
+#dbatch <- "Sampler" # Duplicates done by a sampler at regular frequency, but not daily
 
 ########################
-# Tidy water quality dataset details
-
-dir <- "//deqlab1/Vol_Data/Pudding/2009_2010/deq10submit"  #INPUT the directory you want to retrieve and write files to, change the text in the quotes
-
-
+# Excel Workbook details
+dir <- "//deqlab1/Vol_Data/Malheur/2016_18"   #INPUT the directory you want to retrieve and write files to, change the text in the quotes
 
 #################################################################################
 #################################################################################
@@ -250,7 +246,7 @@ write.csv(t.Activity, file = paste0(dir,'/',subid, '-t.Activity.csv'))
      ######                                      ######
      ##################################################
 
-AnomCrit <- read.csv("AnomCrit.csv") # criteria for code looking for outliers
+AnomCrit <- read.csv(paste0(dir,'/','AnomCrit.csv'),header=TRUE) # criteria for code looking for outliers
 
 
 ##############################################################
