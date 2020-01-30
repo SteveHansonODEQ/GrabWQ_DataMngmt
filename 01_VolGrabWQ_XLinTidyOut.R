@@ -4,14 +4,14 @@
 
 # 1.  Rectify submission project information with VolWQdb submission, project, characterisitc, methods, units, speciation,
 #     Field or Lab analysis, Analyytical organization Limit of quantitiation and low level QC limit.  Each of these must be 
-#     valid values from their respective VolWQdb fields (except LOQ and LLQC limit).  
+#     valid values from their respective database fields (except LOQ and LLQC limit).  
 
 # 2.  Assign LASAR ID values to all stations in the Workbook
 
 # 3.  Sample metadata must include the fields below and their names should match exactly (see 5 for conditional metadata fields):
        # 'site' the site description field, 
        # 'LASAR' the LASAR ID value 
-       # 'SiteIDcontext' should be DEQ as a value for these, 
+       # 'SiteIDcontext' should be DEQ as a value for these when LASAR ID's, 
        # 'DateTime' in the format (yyyy-mm-dd HH:MM) and make sure it is not the formula of date + time (use copy as values in Excel),
        # 'DupBatchKey' used when date is not the only way duplicates are batched together, could be sampler abbreviation, equipment group, 
         # route number, etc.  For samples batched per day blank is OK.
@@ -45,7 +45,7 @@
 # 5.  In some sampling regimes the additonal sample metadata fields may be required.  Each of these is defaulted to NA unless noted otherwise.
        # 'endDateTime' in the format (yyyy-mm-dd HH:MM) for samples that have both a start and end time
        # 'media' this needs to be a valid Storet sample media, the script defaults to 'Water'
-       # 'smplColMthd' required field if not a field parameter.  'Direct Fill' or '2ndContainer' are options, see VolWQdb.t_Method.ShortName  
+       # 'smplColMthd' required field if not a field parameter.  'Grab' or 'Composite' are options, see database t_Method.ShortName  
           # filter by the MethodType = Sample Collection.
        # 'smplColEquip' populated if the equipment has a specific ID number or name.
        # 'smplColEquipName' required when sample collection method is present see VolWQdb.t_Type.Type with TypeFilter = CollectionEquipmentName
